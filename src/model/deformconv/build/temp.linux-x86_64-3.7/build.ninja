@@ -1,0 +1,34 @@
+ninja_required_version = 1.3
+cxx = c++
+nvcc = /mnt/cfs/algorithm/yunpeng.zhang/cuda-11.3/bin/nvcc
+
+cflags = -pthread -B /mnt/cfs/algorithm/qiang.zhang/anaconda3/envs/bevdet/compiler_compat -Wl,--sysroot=/ -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -DWITH_CUDA -I/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src -I/mnt/cfs/algorithm/yiqun.duan/install/anaconda3/envs/bevdet/lib/python3.7/site-packages/torch/include -I/mnt/cfs/algorithm/yiqun.duan/install/anaconda3/envs/bevdet/lib/python3.7/site-packages/torch/include/torch/csrc/api/include -I/mnt/cfs/algorithm/yiqun.duan/install/anaconda3/envs/bevdet/lib/python3.7/site-packages/torch/include/TH -I/mnt/cfs/algorithm/yiqun.duan/install/anaconda3/envs/bevdet/lib/python3.7/site-packages/torch/include/THC -I/mnt/cfs/algorithm/yunpeng.zhang/cuda-11.3/include -I/mnt/cfs/algorithm/yiqun.duan/install/anaconda3/envs/bevdet/include/python3.7m -c
+post_cflags = -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1011"' -DTORCH_EXTENSION_NAME=DCN -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++14
+cuda_cflags = -DWITH_CUDA -I/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src -I/mnt/cfs/algorithm/yiqun.duan/install/anaconda3/envs/bevdet/lib/python3.7/site-packages/torch/include -I/mnt/cfs/algorithm/yiqun.duan/install/anaconda3/envs/bevdet/lib/python3.7/site-packages/torch/include/torch/csrc/api/include -I/mnt/cfs/algorithm/yiqun.duan/install/anaconda3/envs/bevdet/lib/python3.7/site-packages/torch/include/TH -I/mnt/cfs/algorithm/yiqun.duan/install/anaconda3/envs/bevdet/lib/python3.7/site-packages/torch/include/THC -I/mnt/cfs/algorithm/yunpeng.zhang/cuda-11.3/include -I/mnt/cfs/algorithm/yiqun.duan/install/anaconda3/envs/bevdet/include/python3.7m -c
+cuda_post_cflags = -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options ''"'"'-fPIC'"'"'' -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1011"' -DTORCH_EXTENSION_NAME=DCN -D_GLIBCXX_USE_CXX11_ABI=0 -gencode=arch=compute_86,code=compute_86 -gencode=arch=compute_86,code=sm_86 -std=c++14
+ldflags = 
+
+rule compile
+  command = $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
+  depfile = $out.d
+  deps = gcc
+
+rule cuda_compile
+  depfile = $out.d
+  deps = gcc
+  command = $nvcc  $cuda_cflags -c $in -o $out $cuda_post_cflags
+
+
+
+build /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/vision.o: compile /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/vision.cpp
+build /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cpu/modulated_deform_cpu.o: compile /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cpu/modulated_deform_cpu.cpp
+build /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cpu/deform_psroi_pooling_cpu.o: compile /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cpu/deform_psroi_pooling_cpu.cpp
+build /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cpu/deform_cpu.o: compile /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cpu/deform_cpu.cpp
+build /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cuda/deform_conv_cuda.o: cuda_compile /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cuda/deform_conv_cuda.cu
+build /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cuda/deform_psroi_pooling_cuda.o: cuda_compile /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cuda/deform_psroi_pooling_cuda.cu
+build /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cuda/modulated_deform_conv_cuda.o: cuda_compile /mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cuda/modulated_deform_conv_cuda.cu
+
+
+
+
+

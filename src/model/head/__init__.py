@@ -1,0 +1,40 @@
+from importlib import import_module
+from .ddim_depth_refine2 import DDIMDepthRefine2
+from .ddim_depth_refine4 import DDIMDepthRefine4
+from .mmbev_base_depth_refine import BaseDepthRefine
+from .ddim_depth_refine2_res import DDIMDepthRefine2_Res
+from .ddim_depth_refine2_residd import DDIMDepthRefine2_ResIDD
+from .ddim_depth_estimate_res import DDIMDepthEstimate_Res
+from .ddim_depth_refine2_self import DDIMDepthRefine2_Self
+from .ddim_depth_refine2_spn import DDIMDepthRefine2_SPN
+from .ddim_depth_refine2_spnshare import DDIMDepthRefine2_SPNShare
+from .ddim_depth_refine2_nlspn import DDIMDepthRefine2_NLSPN
+from .ddim_depth_refine2_nlspnblur import DDIMDepthRefine2_NLSPNBlur
+from .ddim_depth_refine2_spnshareblur import DDIMDepthRefine2_SPNShareblur
+from .ddim_depth_refine2_selfmask import DDIMDepthRefine2_SelfMask
+from .ddim_depth_refine2_gtmask import DDIMDepthRefine2_GTMask
+from .ddim_depth_refine2_hi import DDIMDepthRefine2_HI
+from .ddim_depth_refine2_mhi import DDIMDepthRefine2_MHI
+from .ddim_depth_propagation_refine import DDIMDepthPropRefine
+from .ddim_depth_refine2_schedularself import DDIMDepthRefine2_SchedularSelf
+from .ddim_depth_estimate_res_swin_bins import DDIMDepthEstimate_Swin
+from .ddim_depth_estimate_res_swin_bins_add import DDIMDepthEstimate_Swin_Bins_ADD
+from .ddim_depth_estimate_res_swin_binsformer_add import DDIMDepthEstimate_Swin_Binsformer_ADD
+from .ddim_depth_estimate_res_swin_binsformer_refine import DDIMDepthEstimate_Swin_Binsformer_Refine
+from .ddim_depth_estimate_res_swin_binsformer_refinegt import DDIMDepthEstimate_Swin_Binsformer_RefineGT
+from .ddim_depth_estimate_res_swin_addHAHI import DDIMDepthEstimate_Swin_Bins_ADDHAHI
+from .depth_estimate_swin_binsformer import DepthEstimate_Swin_Binsformer
+from .ddim_depth_estimate_res_vis import DDIMDepthEstimate_ResVis
+from .ddim_depth_estimate_res_swin_addHAHI_vis import DDIMDepthEstimate_Swin_Bins_ADDHAHIVis
+from .ddim_depth_estimate_res_swin_bins_add_vis import DDIMDepthEstimate_Swin_Bins_ADDVis
+from .ddim_depth_estimate_res_mpvit_HAHI import DDIMDepthEstimate_MPVIT_ADDHAHI
+from .ddim_depth_refine2_self_guide import DDIMDepthRefine2_Self_Guide
+from .ddim_depth_refine2_spnshare_swin import DDIMDepthRefine2_SPNShare_Swin
+
+
+def get(args):
+    model_name = args.head_name
+    module_name = 'model.' + model_name.lower()
+    module = import_module(module_name)
+
+    return getattr(module, model_name)
