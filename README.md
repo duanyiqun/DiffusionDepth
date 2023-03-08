@@ -4,7 +4,7 @@ DiffusionDepth: Diffusion Denoising Aproach for Monocular Depth Estimation
 
 ### Results
 
-<img src="images/052.gif" width = "" height = "150" alt="图片名称" align=center /> <img src="images/036.gif" width = "" height = "150" alt="图片名称" align=center />
+<img src="images/052.gif" width = "" height = "100" alt="图片名称" align=center /> <img src="images/036.gif" width = "" height = "100" alt="图片名称" align=center />
 
 
 ```shell
