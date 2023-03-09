@@ -7,12 +7,12 @@ This is a pytorch implementation for paper "DiffusionDepth: Diffusion Denoising 
 ### Results
 
 ---------------------------------------------------------------------------------
-<img src="images/052.gif" width = "" height = "186" alt="图片名称" align=center />
-
----------------------------------------------------------------------------------
+<img src="images/052.gif" width = "" height = "200" alt="图片名称" align=center />
 
 
-<img src="images/0196.gif" width = "" height = "120" alt="图片名称" align=center /><img src="images/0539.gif" width = "" height = "120" alt="图片名称" align=center /><img src="images/1019.gif" width = "" height = "120" alt="图片名称" align=center /><img src="images/0333.gif" width = "" height = "120" alt="图片名称" align=center />
+
+
+<img src="images/0196.gif" width = "" height = "125" alt="图片名称" align=center /><img src="images/0539.gif" width = "" height = "125" alt="图片名称" align=center /><img src="images/1019.gif" width = "" height = "125" alt="图片名称" align=center /><img src="images/0333.gif" width = "" height = "125" alt="图片名称" align=center />
 
 ---------------------------------------------------------------------------------
 
