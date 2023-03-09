@@ -1,0 +1,8 @@
+# ninja log v5
+11	4884	1674650714000000000	/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cpu/deform_psroi_pooling_cpu.o	a440162cebe98e6d
+11	4907	1674650714000000000	/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cpu/deform_cpu.o	332dcec56886c772
+11	4941	1674650714000000000	/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cpu/modulated_deform_cpu.o	fcb52b1632af018
+11	14120	1674650723000000000	/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cuda/deform_psroi_pooling_cuda.o	bffd900fad52db4b
+11	14252	1674650723000000000	/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cuda/deform_conv_cuda.o	40ca04b4022382cc
+12	14301	1674650723000000000	/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/cuda/modulated_deform_conv_cuda.o	f5ef3d0d485534e0
+11	21549	1674650730000000000	/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/build/temp.linux-x86_64-3.7/mnt/cfs/algorithm/yiqun.duan/depth/diffuserdc/src/model/deformconv/src/vision.o	7592341f261e3c74
