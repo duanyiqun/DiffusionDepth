@@ -104,7 +104,7 @@ After downloading datasets, you should first copy color images, poses, and calib
 
 ```bash
 $ cd DiffusionDepth/utils
-$ python prepare_KITTI_DP.py --path_root_dp PATH_TO_Dataset --path_root_raw PATH_TO_KITTI_RAW
+$ python prepare_KITTI_DP.py --path_root_dc PATH_TO_Dataset --path_root_raw PATH_TO_KITTI_RAW
 ```
 
 ```
