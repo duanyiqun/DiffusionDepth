@@ -1,16 +1,14 @@
 Diffusion Denoising Aproach for Monocular Depth Estimation
 ----------
+This is a PyTorch implementation for the paper "DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation".
+It reformulates the depth estimation task and an iterative refinement process through conditioned denoising. 
 
-This is a pytorch implementation for paper "DiffusionDepth: Diffusion Denoising Aproach for Monocular Depth Estimation" 
-
+More feature to be continued.
 
 ### Results
 
 ---------------------------------------------------------------------------------
 <img src="images/052.gif" width = "800" height = "200" alt="图片名称" align=center />
-
-
-
 
 <img src="images/0196.gif" width = "200" height = "" alt="图片名称" align=center /><img src="images/0539.gif" width = "200" height = "" alt="图片名称" align=center /><img src="images/1019.gif" width = "200" height = "" alt="图片名称" align=center /><img src="images/0333.gif" width = "200" height = "" alt="图片名称" align=center />
 
@@ -35,11 +33,10 @@ Our released implementation is tested on:
 
 - Ubuntu 16.04 / Ubuntu 18.04
 - Python 3.8 (Anaconda 4.8.4)
-- PyTorch 1.9 / torchvision 0.7
+- PyTorch 1.10 / torchvision 1.14
 - Tensorboard 2.3
 - NVIDIA CUDA 11.0
 - NVIDIA Apex
-- [Deformable Convolution V2](https://arxiv.org/abs/1811.11168)
 - 8x NVIDIA GTX 3090 / 8x NVIDIA A100 RTX GPUs
 
 
