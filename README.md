@@ -26,12 +26,6 @@ Best checkpoint on KITTI depth test split offline, we provide finetune metric lo
 0022 |  Metric   |  RMSE: 1.0787  MAE: 0.4806  iRMSE: 0.0026  iMAE: 0.0017  REL: 0.0227  D^1: 0.9982  D^2: 0.9996  D^3: 0.9999
 ```
 
-### Citation
-
-
-```
-To be revealed soon
-```
 
 ---------------------------------------------------------------------------------
 ### Dependencies
