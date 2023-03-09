@@ -55,7 +55,6 @@ $ pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--c
 
 ---------------------------------------------------------------------------------
 
-### Usage
 
 
 #### Dataset
@@ -153,7 +152,7 @@ $ python generate_json_KITTI_DP.py --path_root PATH_TO_KITTI --name_out kitti_dp
 ```
 
 
-#### Training
+### Training
 
 Notes, recomended to download pretrain from Swin transformer official website and modify the backbone file [src/model/backbone/swin.py](src/model/backbone/swin.py) replacing the pretrain path to your local copy.
 
@@ -175,7 +174,7 @@ $ cd DiffusionDepth/experiments
 $ tensorboard --logdir=. --bind_all
 ```
 
-#### Testing
+### Testing
 With only batch size 1 is recomended. 
 ```bash
 $ cd DiffusionDepth/src
