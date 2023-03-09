@@ -13,7 +13,7 @@ from model.ops.depth_transform import DEPTH_TRANSFORM
 from model.necks.hahi import HAHIHeteroNeck
 
 @HEADS.register_module()
-class DDIMDepthEstimate_Swin_Bins_ADDHAHIVis(BaseDepthRefine):
+class DDIMDepthEstimate_Swin_ADDHAHIVis(BaseDepthRefine):
 
     def __init__(
             self,

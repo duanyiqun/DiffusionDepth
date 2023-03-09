@@ -12,7 +12,7 @@ from .mmbev_base_depth_refine import BaseDepthRefine
 from model.ops.depth_transform import DEPTH_TRANSFORM
 
 @HEADS.register_module()
-class DDIMDepthRefine2_Self(BaseDepthRefine):
+class DDIMDepthEstimate_Swin_ADD(BaseDepthRefine):
 
     def __init__(
             self,
@@ -24,8 +24,18 @@ class DDIMDepthRefine2_Self(BaseDepthRefine):
             **kwargs
     ):
         super().__init__(blur_depth_head=False, **kwargs)
-        channels_in = kwargs['in_channels'][0] + self.depth_embed_dim
+        # channels_in = kwargs['in_channels'][0] + self.depth_embed_dim
+        fpn_dim = 256
+        channels_in = fpn_dim
         # print('channels_in numbers are {}'.format(channels_in))
+        in_channels=[192, 384, 768, 1536]
+        """
+        for siwn large 
+        torch.Size([1, 192, 57, 76])
+        torch.Size([1, 384, 29, 38])
+        torch.Size([1, 768, 15, 19])
+        torch.Size([1, 1536, 8, 10])
+        """
         if up_scale_factor == 1:
             self.up_scale = nn.Identity()
         else:
@@ -48,6 +58,38 @@ class DDIMDepthRefine2_Self(BaseDepthRefine):
                         nn.ReLU(True),
                     )
         del self.weight_head
+        del self.conv_lateral
+        del self.conv_up
+        upsample_cfg=dict(type='deconv', bias=False)
+        self.conv_lateral = ModuleList()
+        self.conv_up = ModuleList()
+        for i in range(len(in_channels)):
+            self.conv_lateral.append(
+                nn.Sequential(
+                    nn.Conv2d(in_channels[i], fpn_dim, 3, 1, 1, bias=False),
+                    build_norm_layer(dict(type='BN'), fpn_dim)[1],
+                    nn.ReLU(True),
+                    #     nn.Conv2d(depth_embed_dim, depth_embed_dim, 3, 1, 1, bias=False),
+                    #     build_norm_layer(norm_cfg, depth_embed_dim)[1],
+                    #     nn.ReLU(True),
+                )
+            )
+
+            if i != 0:
+                self.conv_up.append(
+                    nn.Sequential(
+                        build_upsample_layer(
+                            upsample_cfg,
+                            in_channels=fpn_dim,
+                            out_channels=fpn_dim,
+                            kernel_size=2,
+                            stride=2,
+                        ),
+                        build_norm_layer(dict(type='BN'), fpn_dim)[1],
+                        nn.ReLU(True),
+                    )
+                )
+
 
     def forward(self, fp, depth_map, depth_mask, gt_depth_map=None, return_loss=False, **kwargs):
         """
@@ -55,7 +97,6 @@ class DDIMDepthRefine2_Self(BaseDepthRefine):
         depth_map: Tensor with shape bs, 1, h, w
         depth_mask: Tensor with shape bs, 1, h, w
         """
-        sparse_depth = kwargs['sparse_depth']
         if self.detach_fp is not False and self.detach_fp is not None:
             if isinstance(self.detach_fp, (list, tuple, range)):
                 fp = [it for it in fp]
@@ -64,21 +105,21 @@ class DDIMDepthRefine2_Self(BaseDepthRefine):
             else:
                 fp = [it.detach() for it in fp]
 
-        depth_map_t = self.depth_transform.t(depth_map)
-        # 这里给GT也转换成depth_map
+        # depth_map_t = self.depth_transform.t(depth_map)
         gt_map_t = self.depth_transform.t(gt_depth_map)
-        sparse_depth_t = self.depth_transform_t(sparse_depth)
         # down scale to latent 
         # 多层感知机/人为设定 很多通道怎么 变成深度值
-        latent_depth_mask = nn.functional.adaptive_max_pool2d(depth_mask.float(), output_size=depth_map_t.shape[-2:])
-        depth = torch.cat((depth_map_t, latent_depth_mask), dim=1)  # bs, 2, h, w if traditional bs, 1+dim, h, w if deep
+        # latent_depth_mask = nn.functional.adaptive_max_pool2d(depth_mask.float(), output_size=depth_map_t.shape[-2:])
+        # depth = torch.cat((depth_map_t, latent_depth_mask), dim=1)  # bs, 2, h, w if traditional bs, 1+dim, h, w if deep
         # 模型里面隐形编码了mask 哪些是真值
+        # for f in fp:
+        #     print(f.shape)
+
         for i in range(len(fp)):
             f = fp[len(fp) - i - 1]
-            depth_down = nn.functional.adaptive_avg_pool2d(depth, output_size=f.shape[-2:])
-            depth_embed = self.conv_lateral[len(fp) - i - 1](depth_down)
+            x = self.conv_lateral[len(fp) - i - 1](f)
             # conv_lateral 只是通道转换
-            x = torch.cat((f, depth_embed), axis=1)
+            # x = torch.cat((f, depth_embed), axis=1)
             # x = f
             # print('current x {}'.format(x.shape))
             if i > 0:
@@ -88,19 +129,20 @@ class DDIMDepthRefine2_Self(BaseDepthRefine):
             # 和ddim random feature map是一样的尺寸 （长宽一样，通道数不一定）
             # x 是condition，没有参与真值回归
         # x = self.convup_fp(x)
+        # print('x after fpn {}'.format(x))
         # upscale x into depth real size will crush the me
-
+        # x = self.
         refined_depth_t, = self.pipeline(
             batch_size=x.shape[0],
             device=x.device,
             dtype=x.dtype,
-            shape=depth_map_t.shape[-3:],
+            shape=gt_map_t.shape[-3:],
             # shape=x.shape[-3:],
             input_args=(
                 x,
-                depth_map_t,
-                sparse_depth_t,
-                latent_depth_mask
+                None,
+                None,
+                None
             ),
             num_inference_steps=self.diffusion_inference_steps,
             return_dict=False,
@@ -109,7 +151,7 @@ class DDIMDepthRefine2_Self(BaseDepthRefine):
         refined_depth = self.depth_transform.inv_t(refined_depth_t)
         
         # refine depth 直接输出了，还没有cspn这个module
-
+        
         """
         if return_loss:
             return self.loss(
@@ -130,14 +172,14 @@ class DDIMDepthRefine2_Self(BaseDepthRefine):
                 gt_depth=gt_map_t,
                 refine_module_inputs=(
                     x,
-                    depth_map_t,
-                    sparse_depth_t,
-                    latent_depth_mask
+                    None,
+                    None,
+                    None
                 ),
                 blur_depth_t=refined_depth_t,
                 weight=1.0)
 
-        output = {'pred': refined_depth, 'pred_init': depth_map_t, 'blur_depth_t': depth_map_t ,
+        output = {'pred': refined_depth, 'pred_init': gt_map_t, 'blur_depth_t': gt_map_t ,
                 'ddim_loss': ddim_loss, 'gt_map_t': gt_map_t, 
                 'pred_uncertainty': None,
                  'pred_inter': None, 'weight_map': None,
@@ -185,7 +227,6 @@ class DDIMDepthRefine2_Self(BaseDepthRefine):
 
         return loss
 
-    # 提升收敛性，但泛化性能极差
     def ddim_loss_gt(self, gt_depth, refine_module_inputs, blur_depth_t, weight, **kwargs):
         # Sample noise to add to the images
         noise = torch.randn(gt_depth.shape).to(gt_depth.device)
@@ -267,8 +308,7 @@ class CNNDDIMPipiline:
         return {'images': image}
 
 
-
-class Project_Decoder(nn.Sequential):
+class UpSample(nn.Sequential):
     '''Fusion module
     From Adabins
     
@@ -283,6 +323,21 @@ class Project_Decoder(nn.Sequential):
         return self.convB(self.convA(torch.cat([up_x, concat_with], dim=1)))
 
 
+class UpSample_add(nn.Sequential):
+    '''Fusion module
+    From Adabins
+    
+    '''
+    def __init__(self, skip_input, output_features, conv_cfg=None, norm_cfg=None, act_cfg=None):
+        super(UpSample_add, self).__init__()
+        self.convA = ConvModule(skip_input, output_features, kernel_size=3, stride=1, padding=1, conv_cfg=conv_cfg, norm_cfg=norm_cfg, act_cfg=act_cfg)
+        self.convB = ConvModule(output_features, output_features, kernel_size=3, stride=1, padding=1, conv_cfg=conv_cfg, norm_cfg=norm_cfg, act_cfg=act_cfg)
+
+    def forward(self, x, concat_with):
+        up_x = F.interpolate(x, size=[concat_with.size(2), concat_with.size(3)], mode='bilinear', align_corners=True)
+        return self.convB(self.convA(up_x + concat_with))
+
+
 class ScheduledCNNRefine(BaseModule):
     def __init__(self, channels_in, channels_noise, **kwargs):
         super().__init__(**kwargs)
@@ -295,9 +350,9 @@ class ScheduledCNNRefine(BaseModule):
             nn.GroupNorm(4, channels_in),
             nn.ReLU(True),
         )
+        self.upsample_fuse = UpSample_add(channels_in, channels_in)
 
         self.time_embedding = nn.Embedding(1280, channels_in)
-        self.guidance_layer = Project_Decoder(channels_noise*2, channels_in)
 
         self.pred = nn.Sequential(
             nn.Conv2d(channels_in, 64, kernel_size=3, stride=1, padding=1),
@@ -324,10 +379,9 @@ class ScheduledCNNRefine(BaseModule):
         # blur_depth = self.layer(feat); 
         # ret =  a* noisy_image - b * blur_depth
         # print('debug: noisy_image shape {}'.format(noisy_image.shape))
-        # feat = feat + self.noise_embedding(noisy_image,feat)
-        feat = feat + self.noise_embedding(noisy_image)
-        merged_ret = self.guidance_layer(feat, )
-        # 这里考虑加个noise
+        # feat = feat + self.noise_embedding(noisy_image)
+        feat = self.upsample_fuse(feat, self.noise_embedding(noisy_image))
+
         ret = self.pred(feat)
 
         return ret

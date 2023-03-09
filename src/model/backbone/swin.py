@@ -805,7 +805,7 @@ def swin_large_naive_l4w722422k():
                  strides=(4, 2, 2, 2),
                  out_indices=(0, 1, 2, 3),
                  pretrain_style='official',
-                 pretrained='/mnt/cfs/algorithm/wenjie.yuan/new/s3depth/pretrain/swin_large_patch4_window7_224_22k.pth')
+                 pretrained='/mnt/cfs/algorithm/new/s3depth/pretrain/swin_large_patch4_window7_224_22k.pth')
     net.init_weights()
     return net
 
@@ -823,6 +823,6 @@ def swin_large_naive_swinlargepreatrain_add():
                  strides=(4, 2, 2, 2),
                  out_indices=(0, 1, 2, 3),
                  pretrain_style='official',
-                 pretrained='/mnt/cfs/algorithm/wenjie.yuan/new/s3depth/pretrain/swin_large_patch4_window7_224_22k.pth')
+                 pretrained='/mnt/cfs/algorithm/new/s3depth/pretrain/swin_large_patch4_window7_224_22k.pth')
     net.init_weights()
     return net

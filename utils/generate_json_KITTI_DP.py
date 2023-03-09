@@ -107,7 +107,8 @@ def generate_json():
 
         dict_json[split] = list_pairs
         print("{} split : Total {} samples".format(split, len(list_pairs)))
-    dict_json["train"].extend(dict_json["val"])
+    # dict_json["train"].extend(dict_json["val"])
+    # you can merge validation for better performance.
     print("{} split : Total {} samples".format("train", len(dict_json["train"])))
     # For test split
     split = 'test'

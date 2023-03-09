@@ -1,30 +1,26 @@
 """
+DiffusionDepth
+yiqun duan 2023/01/08
 """
-
 
 import time
 import argparse
 
-
 parser = argparse.ArgumentParser(description='DiffusionDepth')
-
 
 # Dataset
 parser.add_argument('--dir_data',
                     type=str,
                     default='/HDD/dataset/NYUDepthV2_HDF5',
-                    # default='/HDD/dataset/KITTIDepthCompletion',
                     help='path to dataset')
 parser.add_argument('--data_name',
                     type=str,
                     default='NYU',
-                    # default='KITTIDC',
                     choices=('NYU', 'KITTIDC'),
                     help='dataset name')
 parser.add_argument('--split_json',
                     type=str,
-                    default='../data_json/nyu.json',
-                    # default='../data_json/kitti_dc.json',
+                    default='../data_json/kitti_dc.json',
                     help='path to json file')
 parser.add_argument('--patch_height',
                     type=int,
@@ -41,7 +37,6 @@ parser.add_argument('--top_crop',
                     default=0,
                     # default=100,
                     help='top crop size for KITTI dataset')
-
 
 # Hardware
 parser.add_argument('--seed',
@@ -65,12 +60,11 @@ parser.add_argument('--no_multiprocessing',
                     default=False,
                     help='do not use multiprocessing')
 
-
 # Network
 parser.add_argument('--model_name',
                     type=str,
                     default='NLSPN',
-                    choices=('NLSPN','Diffusion_DCbase_','Diffusion_DCx4base_'),
+                    choices=('NLSPN', 'Diffusion_DCbase_', 'Diffusion_DCx4base_'),
                     help='model name')
 parser.add_argument('--network',
                     type=str,
@@ -117,41 +111,26 @@ parser.add_argument('--legacy',
                     default=False,
                     help='legacy code support for pre-trained models')
 
-
 # Network Additional
 
 parser.add_argument('--backbone_module',
                     type=str,
                     default='mmbev_resnet',
-                    choices=('mmbev_resnet','swin','mpvit'),
+                    choices=('mmbev_resnet', 'swin', 'mpvit'),
                     help='backbone model name')
 parser.add_argument('--backbone_name',
                     type=str,
                     default='mmbev_res18',
                     choices=('mmbev_res18', 'mmbev_res50', 'mmbev_res101',
-                              'swin_large_naive_nopretrain', 'swin_large_naive_l4w722422k',
-                              'swin_large_naive_swinlargepreatrain_add','mpvit_small'),
+                             'swin_large_naive_nopretrain', 'swin_large_naive_l4w722422k',
+                             'swin_large_naive_swinlargepreatrain_add', 'mpvit_small'),
                     help='backbone sepecific name')
 parser.add_argument('--head_specify',
                     type=str,
                     default=None,
-                    choices=('DDIMDepthRefine2', 'DDIMDepthRefine4', 'DDIMDepthRefine2_Res', 
-                              'DDIMDepthRefine2_ResIDD', 'DDIMDepthEstimate_Res',
-                              'DDIMDepthRefine2_Self','DDIMDepthRefine2_SPN', 
-                              'DDIMDepthRefine2_SPNShare', 'DDIMDepthRefine2_NLSPN',
-                              'DDIMDepthRefine2_NLSPNBlur', 'DDIMDepthRefine2_SPNShareblur',
-                              'DDIMDepthRefine2_SelfMask','DDIMDepthRefine2_GTMask',
-                              'DDIMDepthRefine2_HI','DDIMDepthRefine2_MHI',
-                              'DDIMDepthPropRefine', 'DDIMDepthRefine2_SchedularSelf',
-                              'DDIMDepthEstimate_Swin', 'DDIMDepthEstimate_Swin_Bins_ADD',
-                              'DDIMDepthEstimate_Swin_Binsformer_ADD',
-                              'DDIMDepthEstimate_Swin_Binsformer_Refine',
-                              'DDIMDepthEstimate_Swin_Binsformer_RefineGT',
-                              'DDIMDepthEstimate_Swin_Bins_ADDHAHI',
-                              'DepthEstimate_Swin_Binsformer','DDIMDepthEstimate_ResVis',
-                              'DDIMDepthEstimate_Swin_Bins_ADDHAHIVis','DDIMDepthEstimate_Swin_Bins_ADDVis',
-                              'DDIMDepthEstimate_MPVIT_ADDHAHI','DDIMDepthRefine2_Self_Guide',
-                              'DDIMDepthRefine2_SPNShare_Swin'),
+                    choices=('DDIMDepthEstimate_Res', 'DDIMDepthEstimate_Swin_ADD',
+                             'DDIMDepthEstimate_Swin_ADDHAHI', 'DDIMDepthEstimate_ResVis',
+                             'DDIMDepthEstimate_Swin_ADDHAHIVis', 'DDIMDepthEstimate_MPVIT_ADDHAHI'),
                     help='head model name')
 
 parser.add_argument('--inference_steps',
@@ -162,13 +141,12 @@ parser.add_argument('--inference_steps',
 parser.add_argument('--num_train_timesteps',
                     type=int,
                     default=1000,
-                    choices=('mmbev_resnet','swin'),
                     help='DDIM train steps')
 
 # Training
 parser.add_argument('--loss',
                     type=str,
-                    default='1.0*L1+1.0*L2',
+                    default='1.0*L1+1.0*L2+1.0*DDIM',
                     help='loss function configuration')
 parser.add_argument('--opt_level',
                     type=str,
@@ -197,13 +175,11 @@ parser.add_argument('--batch_size',
                     help='input batch size for training')
 parser.add_argument('--max_depth',
                     type=float,
-                    default=10.0,
-                    # default=90.0,
+                    default=88.0,
                     help='maximum depth')
 parser.add_argument('--min_depth',
                     type=float,
                     default=0.000001,
-                    # default=90.0,
                     help='minimum depth')
 parser.add_argument('--augment',
                     type=bool,
@@ -215,8 +191,7 @@ parser.add_argument('--no_augment',
                     help='no augmentation')
 parser.add_argument('--num_sample',
                     type=int,
-                    default=500,
-                    # default=0,
+                    default=0,
                     help='number of sparse samples')
 parser.add_argument('--test_crop',
                     action='store_true',
@@ -227,14 +202,11 @@ parser.add_argument('--with_loss_chamfer',
                     default=False,
                     help='crop for test')
 
-
-
 # Summary
 parser.add_argument('--num_summary',
                     type=int,
                     default=4,
                     help='maximum number of summary images to save')
-
 
 # Optimizer
 parser.add_argument('--lr',
@@ -306,7 +278,6 @@ parser.add_argument('--save_raw_npdepth',
                     action='store_true',
                     default=False,
                     help='save result images only with submission format')
-
 
 args = parser.parse_args()
 
