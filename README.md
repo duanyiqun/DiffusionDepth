@@ -1,42 +1,71 @@
-Diffusion Denoising Approach for Monocular Depth Estimation
-----------
-This is a PyTorch implementation for the paper "DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation".
-It reformulates the depth estimation task and an iterative refinement process through conditioned denoising. 
+<div align="center">
 
 
-### Citation
+# DiffusionDepth
+**A guided diffusion approach for monocular depth estimation.**
 
+______________________________________________________________________
 
-```
-To be revealed soon
-```
+<p align="center">
+  <a href="https://github.com/duanyiqun/DiffusionDepth">Github</a> •
+  <a href="### Dependencies">Installation</a> •
+    <a href="### Dataset">Dataset</a> •
+<a href="### Training">Training</a> •
+<a href="### Testing">Testing</a> •
+  <a href="#### Pre-trained Models and Results">Logs</a> •
+  <a href="### Citation">Citation</a><br>
+ </p>
 
+[![python](https://img.shields.io/badge/python-%20%203.8-blue.svg)]()
+[![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/duanyiqun/DiffusionDepth/blob/main/LICENSE)
 
-### Results
+______________________________________________________________________
 
----------------------------------------------------------------------------------
+<br>
 <img src="images/052.gif" width = "800" height = "200" alt="图片名称" align=center />
 
 <img src="images/0196.gif" width = "200" height = "" alt="图片名称" align=center /><img src="images/0539.gif" width = "200" height = "" alt="图片名称" align=center /><img src="images/1019.gif" width = "200" height = "" alt="图片名称" align=center /><img src="images/000.gif" width = "200" height = "" alt="图片名称" align=center />
 
 
+</div>
 
-Best checkpoint on KITTI depth test split offline, we provide finetune metric logs in [experiments](experiments)
-```shell
-0022 |  Metric   |  RMSE: 1.0787  MAE: 0.4806  iRMSE: 0.0026  iMAE: 0.0017  REL: 0.0227  D^1: 0.9982  D^2: 0.9996  D^3: 0.9999
+Monocular depth estimation is a challenging task that
+predicts the pixel-wise depth from a single 2D image. We propose DiffusionDepth, a new
+approach that reformulates monocular depth estimation as
+a denoising diffusion process. It learns an iterative denoising process to ‘denoise’ random depth distribution into a
+depth map with the guidance of monocular visual conditions. The process is performed in the latent space encoded by a dedicated depth encoder and decoder. Instead
+of diffusing ground truth (GT) depth, the model learns to reverse the process of diffusing the refined depth of itself into
+random depth distribution. This self-diffusion formulation
+overcomes the difficulty of applying generative models to
+sparse GT depth scenarios. 
+
+### Citation
+
+
+```
+@misc{duan2023diffusiondepth,
+      title={DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation}, 
+      author={Yiqun Duan and Xianda Guo and Zheng Zhu},
+      year={2023},
+      eprint={2303.05021},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 ```
 
 
 ---------------------------------------------------------------------------------
 ### Dependencies
 
+Especially thanks to [nlspn](https://github.com/zzangjinsun/NLSPN_ECCV20) with there excellent work. This code base borrow borrow frameworks to accelerate implementation. 
+
 Our released implementation is tested on:
 
 - Ubuntu 16.04 / Ubuntu 18.04
-- Python 3.8 (Anaconda 4.8.4)
+- Python 3.9.13 (conda-build 22.9.0)
 - PyTorch 1.10 / torchvision 1.14
 - Tensorboard 2.3
-- NVIDIA CUDA 11.0
+- NVIDIA CUDA 11.4
 - NVIDIA Apex
 - 8x NVIDIA GTX 3090 / 8x NVIDIA A100 RTX GPUs
 
@@ -57,7 +86,7 @@ $ pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--c
 
 
 
-#### Dataset
+### Dataset
 
 We used two datasets for training and evaluation. Please also see [nlspn](https://github.com/zzangjinsun/NLSPN_ECCV20) with there excellent work on data processing.  
 
@@ -164,8 +193,13 @@ $ ppython main.py --dir_data datta_path --data_name KITTIDC --split_json ../data
      --batch_size 8 --max_depth 88.0 --save NAME_TO_SAVE \
      --model_name Diffusion_DCbase_ --backbone_module swin --backbone_name swin_large_naive_l4w722422k --head_specify DDIMDepthEstimate_Swin_ADDHAHI 
 ```
-Please refer to the config.py for more options. Including the control of the denoising steps ```--inference_steps=20``` and training diffusion steps ```--num_train_timesteps=1000```. 
+Please refer to the config.py for more options. Including the control of the denoising steps ```--inference_steps=20``` and training diffusion steps ```--num_train_timesteps=1000```.
 
+
+Best checkpoint on KITTI depth test split offline, we provide finetune metric logs in [experiments](experiments)
+```shell
+0022 |  Metric   |  RMSE: 1.0787  MAE: 0.4806  iRMSE: 0.0026  iMAE: 0.0017  REL: 0.0227  D^1: 0.9982  D^2: 0.9996  D^3: 0.9999
+```
 
 During the training, tensorboard logs are saved under the experiments directory. To run the tensorboard:
 
@@ -173,6 +207,15 @@ During the training, tensorboard logs are saved under the experiments directory.
 $ cd DiffusionDepth/experiments
 $ tensorboard --logdir=. --bind_all
 ```
+The tensorboard visualization includes metric curves and depth map visualization as shown below.
+
+
+<img src="images/trainingcurves.png" width = "450" height = "200" alt="图片名称" align=center />
+
+<img src="images/visualization.png" width = "330" height = "" alt="图片名称" align=center />
+
+
+
 
 ### Testing
 With only batch size 1 is recomended. 
@@ -193,4 +236,5 @@ To be revealed soon.
 
 
 #### Notes
-Thanks [nlspn](https://github.com/zzangjinsun/NLSPN_ECCV20) with there excellent work. This code base borrow borrow frameworks to accelerate implementation. 
+
+Especially thanks to [nlspn](https://github.com/zzangjinsun/NLSPN_ECCV20) with there excellent work. This code base borrow borrow frameworks to accelerate implementation. 
