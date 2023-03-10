@@ -8,12 +8,12 @@ ______________________________________________________________________
 
 <p align="center">
   <a href="https://github.com/duanyiqun/DiffusionDepth">Github</a> •
-  <a href="### Dependencies">Installation</a> •
-    <a href="### Dataset">Dataset</a> •
-<a href="### Training">Training</a> •
-<a href="### Testing">Testing</a> •
-  <a href="#### Pre-trained Models and Results">Logs</a> •
-  <a href="### Citation">Citation</a><br>
+  <a href="#dependencies">Installation</a> •
+    <a href="#dataset">Dataset</a> •
+<a href="#training">Training</a> •
+<a href="#testing">Testing</a> •
+  <a href="#pre-trained-models-and-results">Logs</a> •
+  <a href="#citation">Citation</a><br>
  </p>
 
 [![python](https://img.shields.io/badge/python-%20%203.9-blue.svg)]()
@@ -216,9 +216,7 @@ $ tensorboard --logdir=. --bind_all
 The tensorboard visualization includes metric curves and depth map visualization as shown below.
 
 
-<img src="images/trainingcurves.png" width = "450" height = "200" alt="图片名称" align=center />
-
-<img src="images/visualization.png" width = "330" height = "" alt="图片名称" align=center />
+<img src="images/trainingcurves.png" width = "450" height = "200" alt="图片名称" align=center /><img src="images/visualization.png" width = "330" height = "" alt="图片名称" align=center />
 
 
 
