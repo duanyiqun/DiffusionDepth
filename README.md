@@ -7,7 +7,7 @@
 ______________________________________________________________________
 
 <p align="center">
-  <a href="https://github.com/duanyiqun/DiffusionDepth">Github</a> •
+  <a href="https://arxiv.org/abs/2303.05021">Arxiv</a> •
   <a href="#dependencies">Installation</a> •
     <a href="#dataset">Dataset</a> •
 <a href="#training">Training</a> •
