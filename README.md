@@ -16,7 +16,7 @@ ______________________________________________________________________
   <a href="### Citation">Citation</a><br>
  </p>
 
-[![python](https://img.shields.io/badge/python-%20%203.8-blue.svg)]()
+[![python](https://img.shields.io/badge/python-%20%203.9-blue.svg)]()
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/duanyiqun/DiffusionDepth/blob/main/LICENSE)
 
 ______________________________________________________________________
@@ -63,11 +63,17 @@ Our released implementation is tested on:
 
 - Ubuntu 16.04 / Ubuntu 18.04
 - Python 3.9.13 (conda-build 22.9.0)
-- PyTorch 1.10 / torchvision 1.14
+- PyTorch 1.10 / torchvision 1.11.0
 - Tensorboard 2.3
 - NVIDIA CUDA 11.4
 - NVIDIA Apex
 - 8x NVIDIA GTX 3090 / 8x NVIDIA A100 RTX GPUs
+
+```shell
+$ cd DiffusionDepth
+$ pip install -r requirements.txt
+```
+
 
 
 #### NVIDIA Apex
