@@ -199,6 +199,15 @@ $ ppython main.py --dir_data datta_path --data_name KITTIDC --split_json ../data
      --batch_size 8 --max_depth 88.0 --save NAME_TO_SAVE \
      --model_name Diffusion_DCbase_ --backbone_module swin --backbone_name swin_large_naive_l4w722422k --head_specify DDIMDepthEstimate_Swin_ADDHAHI 
 ```
+
+A fast verification with res50 backbone.
+```bash
+$ python main.py --dir_data datta_path --data_name KITTIDC --split_json ../data_json/kitti_dp.json \
+     --patch_height 352 --patch_width 706 --gpus 4,5,6,7 --loss 1.0*L1+1.0*L2+1.0*DDIM --epochs 30 \
+     --batch_size 4 --max_depth 88.0 --num_sample 0 --save NAME_TO_SAVE \
+     --model_name Diffusion_DCbase_ --backbone_module mmbev_resnet --backbone_name mmbev_res50 --head_specify DDIMDepthEstimate_Res
+```
+
 Please refer to the config.py for more options. Including the control of the denoising steps ```--inference_steps=20``` and training diffusion steps ```--num_train_timesteps=1000```.
 
 
