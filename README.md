@@ -68,6 +68,10 @@ Our released implementation is tested on:
 - NVIDIA CUDA 11.4
 - NVIDIA Apex
 - 8x NVIDIA GTX 3090 / 8x NVIDIA A100 RTX GPUs
+- mmdet3d
+
+please see the official [instruction](https://github.com/open-mmlab/mmdetection3d/blob/master/docs/en/getting_started.md) to install mmdet3d
+
 
 ```shell
 $ cd DiffusionDepth
