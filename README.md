@@ -70,15 +70,15 @@ Our released implementation is tested on:
 - 8x NVIDIA GTX 3090 / 8x NVIDIA A100 RTX GPUs
 - mmdet3d
 
-please see the official [instruction](https://github.com/open-mmlab/mmdetection3d/blob/master/docs/en/getting_started.md) to install mmdet3d
-
+Please see the official [instruction](https://github.com/open-mmlab/mmdetection3d/blob/master/docs/en/getting_started.md) to install mmdet3d. 
+Basically it's better to clone the repo to install rather than use conda. 
 
 ```shell
 $ cd DiffusionDepth
 $ pip install -r requirements.txt
 ```
 
-
+The requirements.txt might be slight different on different machines. If you can't find a specific version, please try pip install related version first. 
 
 #### NVIDIA Apex
 
