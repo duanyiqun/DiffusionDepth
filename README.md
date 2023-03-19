@@ -193,7 +193,7 @@ $ python generate_json_KITTI_DP.py --path_root PATH_TO_KITTI --name_out kitti_dp
 
 ### Training
 
-Notes, recomended to download pretrain from Swin transformer official website and modify the backbone file [src/model/backbone/swin.py](src/model/backbone/swin.py) replacing the pretrain path to your local copy.
+Notes, recommended to download pretrain from Swin transformer official website and modify the backbone file [src/model/backbone/swin.py](src/model/backbone/swin.py) replacing the pretrain path to your local copy.
 
 ```bash
 $ cd DiffusionDepth/src
@@ -235,7 +235,7 @@ The tensorboard visualization includes metric curves and depth map visualization
 
 
 ### Testing
-With only batch size 1 is recomended. 
+With only batch size 1 is recommended. 
 ```bash
 $ cd DiffusionDepth/src
 
