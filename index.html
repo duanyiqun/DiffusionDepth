@@ -4,57 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DiffusionDepth: Monocular Depth Estimation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f8f8f8;
         }
         header {
-            background-color: #333;
-            color: white;
+            background-color: #ffffff;
+            color: #333;
             text-align: center;
-            padding: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
         }
         header h1 {
             margin: 0;
             font-size: 2rem;
+            font-weight: 600;
         }
         nav {
             display: flex;
             justify-content: center;
-            background-color: #f1f1f1;
+            background-color: #ffffff;
             padding: 1rem;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
         }
         nav a {
             color: #333;
             text-decoration: none;
             margin: 0 0.5rem;
+            font-weight: 600;
         }
         nav a:hover {
-            text-decoration: underline;
+            color: #007BFF;
+            text-decoration: none;
         }
         main {
             padding: 2rem;
         }
-        main img {
+        .main-image {
+            width: 78%;
             max-width: 100%;
             height: auto;
+            margin: 0 auto;
+            display: block;
         }
         .image-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .image-grid .grid-item {
+            flex-basis: calc(78% / 4);
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        .image-grid img {
+            width: 100%;
+            height: auto;
+        }
+        @media (max-width: 768px) {
+            .image-grid .grid-item {
+                flex-basis: calc(78% / 2);
+            }
+        }
+        @media (max-width: 480px) {
+            .image-grid .grid-item {
+                flex-basis: 78%;
+            }
         }
         footer {
-            background-color: #333;
-            color: white;
+            background-color: #ffffff;
+            color: #333;
             text-align: center;
-            padding: 1rem;
-            margin-top: 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -71,28 +100,35 @@
         <a href="#testing">Testing</a>
         <a href="#pre-trained-models-and-results">Logs</a>
         <a href="#citation">Citation</a>
-    </nav>
+    </nav
+
+
     <main>
-        <div class="image-grid">
-            <img src="images/052.gif" alt="DiffusionDepth process" />
-            <img src="images/0196.gif" alt="Depth estimation example 1" />
-            <img src="images/0539.gif" alt="Depth estimation example 2" />
-            <img src="images/1019.gif" alt="Depth estimation example 3" />
-            <img src="images/000.gif" alt="Depth estimation example 4" />
-        </div>
-        <h2 id="dependencies">Dependencies</h2>
-        <!-- Include dependencies content -->
+    <div class="image-grid">
+        <img src="images/052.gif" alt="DiffusionDepth process" />
+        <img src="images/0196.gif" alt="Depth estimation example 1" />
+        <img src="images/0539.gif" alt="Depth estimation example 2" />
+        <img src="images/1019.gif" alt="Depth estimation example 3" />
+        <img src="images/000.gif" alt="Depth estimation example 4" />
 
-        <h2 id="dataset">Dataset</h2>
-        <!-- Include dataset content -->
 
-        <h2 id="training">Training</h2>
-        <!-- Include training content -->
 
-        <h2 id="testing">Testing</h2>
-        <!-- Include testing content -->
 
-        <h2 id="pre-trained-models-and-results">Pre-trained Models and Results</h2>
-        <!-- Include pre-trained models and results content -->
 
-        <h2 id="citation">Citation</h2
+    </div>
+    <h2 id="dependencies">Dependencies</h2>
+    <!-- Include dependencies content -->
+
+    <h2 id="dataset">Dataset</h2>
+    <!-- Include dataset content -->
+
+    <h2 id="training">Training</h2>
+    <!-- Include training content -->
+
+    <h2 id="testing">Testing</h2>
+    <!-- Include testing content -->
+
+    <h2 id="pre-trained-models-and-results">Pre-trained Models and Results</h2>
+    <!-- Include pre-trained models and results content -->
+
+    <h2 id="citation">Citation</h2
