@@ -261,9 +261,9 @@ We provide the pre-trained models and results on KITTI depth prediction test spl
 
 |    Model    | RMSE  | MAE | iRMSE     |  iMAE    |REL| D<sup>1</sup> |  D<sup>2</sup>    |   D<sup>3</sup>     |      
 |----------|:-------------:|:----:|:----:|:----:|:-------------:|:----:|:----:|:----:|
-|   [Res50](https://huggingface.co/claudecc/diffusiondepth/blob/main/model_00030.pt) | 1.7232 | 0.8713 | 0.0066  | 0.0041 | 0.0496 | 0.9872 | 0.9977  | 0.9992 |
-|  [Swin](https://huggingface.co/claudecc/diffusiondepth/blob/main/model_00035.pt) |     0.9801    | 0.4254 | 0.0025 | 0.0016 |    0.0207    | 0.9983 | 0.9996 |0.9999
-| [MpVit](https://huggingface.co/claudecc/diffusiondepth/blob/main/model_00035.pt)    |      1.1502     |0.4788  | 0.0029 | 0.0018 |      0.0229     | 0.9978| 0.9996 | 0.9998 |
+|   [Res50](https://huggingface.co/claudecc/diffusiondepth/blob/main/res50_model_00030.pt) | 1.7232 | 0.8713 | 0.0066  | 0.0041 | 0.0496 | 0.9872 | 0.9977  | 0.9992 |
+|  [Swin](https://huggingface.co/claudecc/diffusiondepth/blob/main/swin_model_00035.pt) |     0.9801    | 0.4254 | 0.0025 | 0.0016 |    0.0207    | 0.9983 | 0.9996 |0.9999
+| [MpVit](https://huggingface.co/claudecc/diffusiondepth/blob/main/mpvit_model_00037.pt)    |      1.1502     |0.4788  | 0.0029 | 0.0018 |      0.0229     | 0.9978| 0.9996 | 0.9998 |
 
 
 </div>
