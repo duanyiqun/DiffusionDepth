@@ -266,7 +266,7 @@ class KITTIDC(BaseDataset):
         depth_maps = []
         for sparse_map in depth: 
             depth_map = np.asarray(sparse_map, dtype=np.float32)
-            depth_map, _ = simple_depth_completion(depth_map)
+            # depth_map, _ = simple_depth_completion(depth_map)
             depth_maps.append(depth_map)
         depth_maps = np.stack(depth_maps)  # bs, h, w
 
