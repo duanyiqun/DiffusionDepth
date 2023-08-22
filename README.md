@@ -58,6 +58,7 @@ sparse GT depth scenarios.
 Updates:
 
 - The pretrained model of KITTI dataset is released.
+- Rank 4th (SLog), 2th (iRMSE), 3th (sqErrorRel) on  on the official KITTI leaderboard 
 
 
 ### Dependencies
