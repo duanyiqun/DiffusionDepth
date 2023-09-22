@@ -76,7 +76,7 @@ Our released implementation is tested on:
 - 8x NVIDIA GTX 3090 / 8x NVIDIA A100 RTX GPUs
 - mmdet3d
 
-Please see the official [instruction](https://github.com/open-mmlab/mmdetection3d/blob/master/docs/en/getting_started.md) to install mmdet3d. 
+Please see the official [instruction](https://github.com/open-mmlab/mmdetection3d/blob/master/docs/en/getting_started.md) to install mmdet3d. Apologize for any inconvenience caused by version incompatibilities (as mentioned in the issues) when installing this library. To address the issue, please check out mmdet3d==0.15.0 and then execute a local installation.
 Basically it's better to clone the repo to install rather than use conda. 
 
 ```shell
