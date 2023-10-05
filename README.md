@@ -68,7 +68,7 @@ Especially thanks to [nlspn](https://github.com/zzangjinsun/NLSPN_ECCV20) with t
 Our released implementation is tested on:
 
 - Ubuntu 16.04 / Ubuntu 18.04
-- Python 3.9.13 (conda-build 22.9.0)
+- Python 3.8.x (conda-build 22.9.0) 
 - PyTorch 1.10 / torchvision 1.11.0
 - Tensorboard 2.3
 - NVIDIA CUDA 11.4
