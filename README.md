@@ -40,7 +40,7 @@ overcomes the difficulty of applying generative models to
 sparse GT depth scenarios. 
 
 ### Citation
-
+This paper is published in ECCV 2024, Milano, Italy.
 
 ```
 @misc{duan2023diffusiondepth,
