@@ -74,9 +74,13 @@ Our released implementation is tested on:
 - NVIDIA CUDA 11.4
 - NVIDIA Apex
 - 8x NVIDIA GTX 3090 / 8x NVIDIA A100 RTX GPUs
-- mmdet3d
+- mmdet3d  1.0.0rc4
+- mmcv-full 1.6.2
+- mmsegmentation 0.27.0
+- mmdet 2.25.1
 
-Please see the official [instruction](https://github.com/open-mmlab/mmdetection3d/blob/master/docs/en/getting_started.md) to install mmdet3d. Apologize for any inconvenience caused by version incompatibilities (as mentioned in the issues) when installing this library. To address the issue, please check out mmdet3d==0.15.0 and then execute a local installation.
+
+Please see the official [instruction](https://github.com/open-mmlab/mmdetection3d/blob/master/docs/en/getting_started.md) to install mmdet3d. Apologize for any inconvenience caused by version incompatibilities (as mentioned in the issues) when installing this library. To address the issue, please check out mmdet3d==0.16.0 and then execute a local installation.
 Basically it's better to clone the repo to install rather than use conda. 
 
 ```shell
@@ -85,7 +89,6 @@ $ pip install -r requirements.txt
 ```
 
 The requirements.txt might be slight different on different machines. If you can't find a specific version, please try pip install related version first. 
-
 #### NVIDIA Apex
 
 NVIDIA Apex is a good choice for multi-GPU training to save GPU memory. However we only use option "O0" to train the work. Wellcome to discuss with us about half precision performance. 
@@ -95,6 +98,8 @@ Apex can be installed as follows:
 $ cd PATH_TO_INSTALL
 $ git clone https://github.com/NVIDIA/apex
 $ cd apex
+$ git tag
+$ git checkout 22.03 
 $ pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./ 
 ```
 
